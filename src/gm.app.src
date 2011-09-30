@@ -1,0 +1,12 @@
+{application, gm,
+    [
+        {description, "A GraphicsMagick wrapper"},
+        {vsn, "0.1.0"},
+        {registered, []},
+        {applications, [
+                kernel,
+                stdlib
+            ]},
+        {modules, [gm, gm_format_char, gm_options]},
+        {env, []}
+    ]}.

@@ -24,6 +24,10 @@ An Erlang GraphicsMagick wrapper
     % Resize
     gm:convert("/some/image.jpg", "/something/resized.jpg", [{resize, 240, 240}]).
 
+## EXTENDING
+
+New options can be added to `gm_options.erl` to broaden option support. Just open a pull request and I'll merge in additions.
+
 ## LICENSE
 
 MIT

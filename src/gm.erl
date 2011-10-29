@@ -60,7 +60,7 @@ exec_cmd(Template, ExtraOptions, Options) ->
   OptString = opt_string(Options),
   PreParsed = bind_data(Template, ExtraOptions, [escape]),
   CmdString = re:replace(PreParsed, "{{options}}", OptString, [{return, list}]),
-  Cmd = os:cmd("gm " ++ CmdString),
+  Cmd = os:cmd(lists:concat(["gm ",CmdString])),
   parse_result(Cmd).
 
 %% Create a format string from the passed in options
@@ -106,17 +106,17 @@ opt_string(OptString, [Option|Options]) ->
     ["", []] ->
       string:join([OptString, Switch], " ");
     _ ->
-      Parsed = "'" ++ bind_data(Template, Data, []) ++ "'",
+      Parsed = lists:concat(["'",bind_data(Template, Data, []),"'"]),
       string:join([OptString, Switch, Parsed], " ")
   end,
   opt_string(NewOptString, Options).
 
 %% Bind data to a command template
 bind_data(Template, [{Key, Value}|Rest], Options) ->
-  Search = ":" ++ atom_to_list(Key),
+  Search = lists:concat([":",atom_to_list(Key)]),
   Replace = case Options of
     [escape] ->
-      "'" ++ Value ++ "'";
+      lists:concat(["'",Value,"'"]);
     _ ->
       Value
   end,
@@ -128,25 +128,23 @@ bind_data(Template, [], _Options) ->
 
 %% Parse an error coming from an executed os:cmd
 cmd_error(Cmd) ->
-  R1 = re:run(Cmd, "command not found"),
-  R2 = re:run(Cmd, "No such file"),
-  R3 = re:run(Cmd, "Request did not return an image"),
-  R4 = re:run(Cmd, "unable to open image"),
-  case R1 of
-    {match, _} -> {error, command_not_found};
+  Errors = [
+    ["command not found", command_not_found],
+    ["No such file", file_not_found],
+    ["Request did not return an image", no_image_returned],
+    ["unable to open image", unable_to_open]
+  ],
+  parse_error(Cmd, Errors).
+
+%% Run through each error, checking for a match.
+%% Return `no_error` when there are no more possibilities.
+parse_error(_, []) ->
+  no_error;
+parse_error(Cmd, [[ErrorStr, ErrorAtom]|Errors]) ->
+  case re:run(Cmd, ErrorStr) of
+    {match, _} -> {error, ErrorAtom};
     _ ->
-      case R2 of
-        {match, _} -> {error, file_not_found};
-        _ ->
-          case R3 of
-            {match, _} -> {error, no_image_returned};
-            _ ->
-              case R4 of
-                {match, _} -> {error, unable_to_open};
-                _ -> no_error
-              end
-          end
-      end
+      parse_error(Cmd, Errors)
   end.
     
 %% Return ok if successful, otherwise return a useful error
@@ -172,9 +170,13 @@ parse_result(Result) ->
 -include_lib("eunit/include/eunit.hrl").
 gm_test_() ->
   [
+    {"Returns a file_not_found error", fun test_file_not_found/0},
     {"Gets explicit image info", fun test_image_info/0},
     {"Doesn't get hacked", fun test_escapes_hacking/0}
   ].
+
+test_file_not_found() ->
+  ?assertMatch({error, file_not_found}, identify("doesntexist.jpg", [])).
 
 test_image_info() ->
   Img = "sandbox/cyberbrain.jpg",

@@ -7,6 +7,11 @@ opt({crop, Width, Height}) ->
     {width, integer_to_list(Width)},
     {height, integer_to_list(Height)}
   ]];
+opt({resize, Width, Height}) ->
+  ["-resize", ":widthx:height\\>", [
+    {width, integer_to_list(Width)},
+    {height, integer_to_list(Height)}
+  ]];
 opt({output_directory, Dir}) ->
   ["-output-directory", ":output_directory", [{output_directory, Dir}]];
 opt(create_directories) ->

@@ -101,13 +101,12 @@ opt_string(Options) ->
 opt_string(OptString, []) ->
   OptString;
 opt_string(OptString, [Option|Options]) ->
-  [Switch, Template, Data] = gm_options:opt(Option),
-  NewOptString = case [Template, Data] of
-    ["", []] ->
-      string:join([OptString, Switch], " ");
-    _ ->
+  NewOptString = case gm_options:opt(Option) of
+    {Switch, Template, Data} ->
       Parsed = lists:concat(["'",bind_data(Template, Data, []),"'"]),
-      string:join([OptString, Switch, Parsed], " ")
+      string:join([OptString, Switch, Parsed], " ");
+    {Switch} ->
+      string:join([OptString, Switch], " ")
   end,
   opt_string(NewOptString, Options).
 
@@ -129,10 +128,10 @@ bind_data(Template, [], _Options) ->
 %% Parse an error coming from an executed os:cmd
 cmd_error(Cmd) ->
   Errors = [
-    ["command not found", command_not_found],
-    ["No such file", file_not_found],
-    ["Request did not return an image", no_image_returned],
-    ["unable to open image", unable_to_open]
+    {"command not found", command_not_found},
+    {"No such file", file_not_found},
+    {"Request did not return an image", no_image_returned},
+    {"unable to open image", unable_to_open}
   ],
   parse_error(Cmd, Errors).
 
@@ -140,9 +139,9 @@ cmd_error(Cmd) ->
 %% Return `no_error` when there are no more possibilities.
 parse_error(_, []) ->
   no_error;
-parse_error(Cmd, [[ErrorStr, ErrorAtom]|Errors]) ->
-  case re:run(Cmd, ErrorStr) of
-    {match, _} -> {error, ErrorAtom};
+parse_error(Cmd, [{ErrorDescription, Error}|Errors]) ->
+  case re:run(Cmd, ErrorDescription) of
+    {match, _} -> {error, Error};
     _ ->
       parse_error(Cmd, Errors)
   end.

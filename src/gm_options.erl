@@ -8,7 +8,7 @@ opt({crop, Width, Height}) ->
     {height, integer_to_list(Height)}
   ]};
 opt({resize, Width, Height}) ->
-  {"-resize", ":widthx:height\\>", [
+  {"-resize", ":widthx:height", [
     {width, integer_to_list(Width)},
     {height, integer_to_list(Height)}
   ]};

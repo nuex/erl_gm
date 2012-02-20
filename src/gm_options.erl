@@ -35,4 +35,28 @@ opt({crop, Width, Height, XOffset, YOffset}) ->
     {y_offset, integer_to_list(YOffset)}
   ]};
 opt({edge, Radius}) ->
-  {"-edge", ":radius", [{radius, integer_to_list(Radius)}]}.
+  {"-edge", ":radius", [{radius, integer_to_list(Radius)}]};
+opt({size, Width, Height}) ->
+  {"-size", ":widthx:height", [
+    {width, integer_to_list(Width)},
+    {height, integer_to_list(Height)}
+  ]};
+opt({thumbnail, Width, Height}) ->
+  {"-thumbnail", ":widthx:height^", [
+    {width, integer_to_list(Width)},
+    {height, integer_to_list(Height)}
+  ]};
+opt({gravity, Gravity}) ->
+  {"-gravity", ":gravity", [{gravity, Gravity}]};
+opt({quality, Quality}) ->
+  {"-quality", ":quality", [{quality, integer_to_list(Quality)}]};
+opt({extent, Width, Height}) ->
+  {"-extent", ":widthx:height", [
+    {width, integer_to_list(Width)},
+    {height, integer_to_list(Height)}
+  ]};
+opt({type, Type}) ->
+  {"-type", ":type", [{type, Type}]};
+opt({interlace, Interlace}) ->
+  {"-interlace", ":interlace", [{interlace, Interlace}]}.
+

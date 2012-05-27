@@ -58,5 +58,7 @@ opt({extent, Width, Height}) ->
 opt({type, Type}) ->
   {"-type", ":type", [{type, Type}]};
 opt({interlace, Interlace}) ->
-  {"-interlace", ":interlace", [{interlace, Interlace}]}.
+  {"-interlace", ":interlace", [{interlace, Interlace}]};
+opt({format, Format}) ->
+  {"-format", ":format", [{format, atom_to_list(Format)}]}.
 

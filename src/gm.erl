@@ -115,15 +115,22 @@ bind_data(Template, [{Key, Value}|Rest], Options) ->
   Search = lists:concat([":",atom_to_list(Key)]),
   Replace = case Options of
     [escape] ->
-      lists:concat(["'",Value,"'"]);
+      lists:concat(["'", stringify(Value), "'"]);
     _ ->
       Value
   end,
-  NewTemplate = re:replace(Template, Search, Replace, [{return, list}]),
+  NewTemplate = re:replace(Template, Search, stringify(Replace), [{return, list}]),
   bind_data(NewTemplate, Rest, Options);
 bind_data(Template, [], _Options) ->
   Template.
 
+%% Convert the given value to a string
+stringify(Value) when is_integer(Value) ->
+  erlang:integer_to_list(Value);
+stringify(Value) when is_atom(Value) ->
+  erlang:atom_to_list(Value);
+stringify(Value) ->
+  Value.
 
 %% Parse an error coming from an executed os:cmd
 cmd_error(Cmd) ->

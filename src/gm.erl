@@ -127,6 +127,8 @@ bind_data(Template, [], _Options) ->
 %% Convert the given value to a string
 stringify(Value) when is_integer(Value) ->
   erlang:integer_to_list(Value);
+stringify(Value) when is_atom(Value) ->
+  erlang:atom_to_list(Value);
 stringify(Value) ->
   Value.
 

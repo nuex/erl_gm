@@ -27,7 +27,7 @@
 identify_explicit(File, Options) ->
   Template = "identify -format :format_string :file",
   TemplateOpts = [{file, File}, {format_string, identify_format_string(Options)}],
-  Result = os:cmd(bind_data(Template, TemplateOpts, [escape])),
+  Result = os:cmd("gm " ++ bind_data(Template, TemplateOpts, [escape])),
   case cmd_error(Result) of
     {error, Msg}  -> {error, Msg};
     no_error      -> parse_identify_explicit(Result)

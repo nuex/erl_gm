@@ -7,8 +7,9 @@
           identify_explicit/2,
           identify/2,
           convert/3,
-          mogrify/2
-       ]).
+          mogrify/2,
+          version/0
+        ]).
 
 %% =====================================================
 %% API
@@ -152,7 +153,7 @@ parse_error(Cmd, [{ErrorDescription, Error}|Errors]) ->
     _ ->
       parse_error(Cmd, Errors)
   end.
-    
+
 %% Return ok if successful, otherwise return a useful error
 parse_result(Result) ->
   case cmd_error(Result) of

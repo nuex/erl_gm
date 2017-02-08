@@ -8,6 +8,7 @@
           identify/2,
           convert/3,
           mogrify/2,
+          montage/3,
           version/0
         ]).
 
@@ -52,9 +53,24 @@ mogrify(File, Options) ->
   TemplateOpts = [{file, File}],
   exec_cmd(Template, TemplateOpts, Options).
 
+%% Montage
+montage(Files, Converted, Options) ->
+  Template = "montage {{options}} :input_file :output_file",
+  TemplateOpts = [{input_file, string:join(Files, "' '")}, {output_file, Converted}],
+  exec_cmd(Template, TemplateOpts, Options).
+
+%% Version
+version() ->
+  Template = "version",
+  exec_cmd(Template).
+
 %% =====================================================
 %% INTERNAL FUNCTIONS
 %% =====================================================
+
+%% Run an os:cmd based on a template without options
+exec_cmd(Template) ->
+  os:cmd(lists:concat(["gm ",Template])).
 
 %% Run an os:cmd based on a template and passed in options
 exec_cmd(Template, ExtraOptions, Options) ->

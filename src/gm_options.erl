@@ -71,4 +71,6 @@ opt({watermark, Width, Height}) ->
     {height, Height}
   ]};
 opt(negate) ->
-  {"-negate"}.
+  {"-negate"};
+opt({dissolve, Percent}) ->
+  {"-dissolve", ":percent", [{percent, Percent}]}.

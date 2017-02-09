@@ -64,4 +64,9 @@ opt({format, Format}) ->
 opt(adjoin) ->
   {"-adjoin"};
 opt('+adjoin') ->
-  {"+adjoin"}.
+  {"+adjoin"};
+opt({watermark, Width, Height}) ->
+  {"-watermark", ":widthx:height", [
+    {width, Width},
+    {height, Height}
+  ]}.

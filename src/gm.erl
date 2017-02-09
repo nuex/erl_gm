@@ -6,6 +6,7 @@
 -export([
           identify_explicit/2,
           identify/2,
+          composite/4,
           convert/3,
           mogrify/2,
           montage/3,
@@ -39,6 +40,12 @@ identify_explicit(File, Options) ->
 identify(File, Options) ->
   Template = "identify {{options}} :file",
   TemplateOpts = [{file, File}],
+  exec_cmd(Template, TemplateOpts, Options).
+
+%% Composite
+composite(File, BaseFile, Converted, Options) ->
+  Template = "composite {{options}} :input_file :output_file",
+  TemplateOpts = [{input_file, File ++ "' '" ++ BaseFile}, {output_file, Converted}],
   exec_cmd(Template, TemplateOpts, Options).
 
 %% Convert

@@ -73,4 +73,8 @@ opt({watermark, Width, Height}) ->
 opt(negate) ->
   {"-negate"};
 opt({dissolve, Percent}) ->
-  {"-dissolve", ":percent", [{percent, Percent}]}.
+  {"-dissolve", ":percent", [{percent, Percent}]};
+opt({define, Key}) ->
+  {"-define", ":key", [{key, Key}]};
+opt({define, Key, Value}) ->
+  {"-define", ":key=:value", [{key, Key}, {value, Value}]}.

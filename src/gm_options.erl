@@ -1,31 +1,26 @@
+%%% gm
+%%%
+%%% Options for interacting with GraphicsMagick functions
+
 -module(gm_options).
 -export([opt/1]).
 
+%% =====================================================
+%% Options ordered alphabetically
+%% =====================================================
 
-opt({crop, Width, Height}) ->
-  {"-crop", ":widthx:height", [
-    {width, Width},
-    {height, Height}
-  ]};
-opt({resize, Width, Height}) ->
-  {"-resize", ":widthx:height", [
-    {width, Width},
-    {height, Height}
-  ]};
-opt({output_directory, Dir}) ->
-  {"-output-directory", ":output_directory", [{output_directory, Dir}]};
-opt(create_directories) ->
-  {"-create-directories"};
-opt(flip) ->
-  {"-flip"};
-opt(magnify) ->
-  {"-magnify"};
-opt({rotate, Degrees}) ->
-  {"-rotate", ":degrees", [{degrees, Degrees}]};
+opt('+adjoin') -> {"+adjoin"};
+opt(adjoin) -> {"-adjoin"};
 opt({blur, Radius, Sigma}) ->
   {"-blur", ":radiusx:sigma", [
     {radius, Radius},
     {sigma, Sigma}
+  ]};
+opt(create_directories) -> {"-create-directories"};
+opt({crop, Width, Height}) ->
+  {"-crop", ":widthx:height", [
+    {width, Width},
+    {height, Height}
   ]};
 opt({crop, Width, Height, XOffset, YOffset}) ->
   {"-crop", ":widthx:height+:x_offset+:y_offset", [
@@ -34,8 +29,42 @@ opt({crop, Width, Height, XOffset, YOffset}) ->
     {x_offset, XOffset},
     {y_offset, YOffset}
   ]};
+opt({define, Key}) ->
+  {"-define", ":key", [{key, Key}]};
+opt({define, Key, Value}) ->
+  {"-define", ":key=:value", [
+    {key, Key},
+    {value, Value}
+  ]};
+opt({dissolve, Percent}) ->
+  {"-dissolve", ":percent", [{percent, Percent}]};
 opt({edge, Radius}) ->
   {"-edge", ":radius", [{radius, Radius}]};
+opt({extent, Width, Height}) ->
+  {"-extent", ":widthx:height", [
+    {width, Width},
+    {height, Height}
+  ]};
+opt(flip) -> {"-flip"};
+opt({format, Format}) ->
+  {"-format", ":format", [{format, Format}]};
+opt({gravity, Gravity}) ->
+  {"-gravity", ":gravity", [{gravity, Gravity}]};
+opt({interlace, Interlace}) ->
+  {"-interlace", ":interlace", [{interlace, Interlace}]};
+opt(magnify) -> {"-magnify"};
+opt(negate) -> {"-negate"};
+opt({output_directory, Dir}) ->
+  {"-output-directory", ":output_directory", [{output_directory, Dir}]};
+opt({quality, Quality}) ->
+  {"-quality", ":quality", [{quality, Quality}]};
+opt({resize, Width, Height}) ->
+  {"-resize", ":widthx:height", [
+    {width, Width},
+    {height, Height}
+  ]};
+opt({rotate, Degrees}) ->
+  {"-rotate", ":degrees", [{degrees, Degrees}]};
 opt({size, Width, Height}) ->
   {"-size", ":widthx:height", [
     {width, Width},
@@ -46,35 +75,10 @@ opt({thumbnail, Width, Height}) ->
     {width, Width},
     {height, Height}
   ]};
-opt({gravity, Gravity}) ->
-  {"-gravity", ":gravity", [{gravity, Gravity}]};
-opt({quality, Quality}) ->
-  {"-quality", ":quality", [{quality, Quality}]};
-opt({extent, Width, Height}) ->
-  {"-extent", ":widthx:height", [
-    {width, Width},
-    {height, Height}
-  ]};
 opt({type, Type}) ->
   {"-type", ":type", [{type, Type}]};
-opt({interlace, Interlace}) ->
-  {"-interlace", ":interlace", [{interlace, Interlace}]};
-opt({format, Format}) ->
-  {"-format", ":format", [{format, Format}]};
-opt(adjoin) ->
-  {"-adjoin"};
-opt('+adjoin') ->
-  {"+adjoin"};
 opt({watermark, Width, Height}) ->
   {"-watermark", ":widthx:height", [
     {width, Width},
     {height, Height}
-  ]};
-opt(negate) ->
-  {"-negate"};
-opt({dissolve, Percent}) ->
-  {"-dissolve", ":percent", [{percent, Percent}]};
-opt({define, Key}) ->
-  {"-define", ":key", [{key, Key}]};
-opt({define, Key, Value}) ->
-  {"-define", ":key=:value", [{key, Key}, {value, Value}]}.
+  ]}.

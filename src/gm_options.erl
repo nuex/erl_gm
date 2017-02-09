@@ -69,4 +69,6 @@ opt({watermark, Width, Height}) ->
   {"-watermark", ":widthx:height", [
     {width, Width},
     {height, Height}
-  ]}.
+  ]};
+opt(negate) ->
+  {"-negate"}.

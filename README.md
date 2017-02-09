@@ -24,6 +24,44 @@ An Erlang GraphicsMagick wrapper
     % Resize
     gm:convert("/some/image.jpg", "/something/resized.jpg", [{resize, 240, 240}]).
 
+## AVAILABLE GM FUNCTIONS
+
+    gm:composite
+    gm:convert
+    gm:identify
+    gm:mogrify
+    gm:montage
+    gm:version
+
+## AVAILABLE GM OPTIONS
+
+    -adjoin
+    -blur
+    -create_directories
+    -crop
+    -define
+    -dissolve
+    -edge
+    -extent
+    -flip
+    -format
+    -gravity
+    -interlace
+    -magnify
+    -negate
+    -output_directory
+    -quality
+    -resize
+    -rotate
+    -size
+    -thumbnail
+    -type
+    -watermark
+
+## AVAILABLE SHORTCUTS
+
+  gm:identify_explicit
+
 ## EXTENDING
 
 New options can be added to `gm_options.erl` to broaden option support. Just open a pull request and I'll merge in additions.

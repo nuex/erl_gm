@@ -48,6 +48,29 @@ opt({extent, Width, Height}) ->
 opt(flip) -> {"-flip"};
 opt({format, Format}) ->
   {"-format", ":format", [{format, Format}]};
+opt({geometry, Width, Height}) ->
+  {"-geometry", ":widthx:height", [
+    {width, Width},
+    {height, Height}
+  ]};
+opt({geometry, Width, Height, XOffset, YOffset}) ->
+  opt({geometry, Width, Height, XOffset, YOffset, ''});
+opt({geometry, Width, Height, XOffset, YOffset, ResizeOption}) ->
+  XOffsetOption = case XOffset < 0 of
+    true -> erlang:integer_to_list(XOffset);
+    false -> "+" ++ erlang:integer_to_list(XOffset)
+  end,
+  YOffsetOption = case YOffset < 0 of
+    true -> erlang:integer_to_list(YOffset);
+    false -> "+" ++ erlang:integer_to_list(YOffset)
+  end,
+  {"-geometry", ":widthx:height:x_offset:y_offset:resize_option", [
+    {width, Width},
+    {height, Height},
+    {x_offset, XOffsetOption},
+    {y_offset, YOffsetOption},
+    {resize_option, ResizeOption}
+  ]};
 opt({gravity, Gravity}) ->
   {"-gravity", ":gravity", [{gravity, Gravity}]};
 opt({interlace, Interlace}) ->

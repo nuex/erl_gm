@@ -6,9 +6,12 @@
 -export([
           identify_explicit/2,
           identify/2,
+          composite/4,
           convert/3,
-          mogrify/2
-       ]).
+          mogrify/2,
+          montage/3,
+          version/0
+        ]).
 
 %% =====================================================
 %% API
@@ -39,6 +42,12 @@ identify(File, Options) ->
   TemplateOpts = [{file, File}],
   exec_cmd(Template, TemplateOpts, Options).
 
+%% Composite
+composite(File, BaseFile, Converted, Options) ->
+  Template = "composite {{options}} :input_file :output_file",
+  TemplateOpts = [{input_file, File ++ "' '" ++ BaseFile}, {output_file, Converted}],
+  exec_cmd(Template, TemplateOpts, Options).
+
 %% Convert
 convert(File, Converted, Options) ->
   Template = "convert {{options}} :input_file :output_file",
@@ -51,9 +60,24 @@ mogrify(File, Options) ->
   TemplateOpts = [{file, File}],
   exec_cmd(Template, TemplateOpts, Options).
 
+%% Montage
+montage(Files, Converted, Options) ->
+  Template = "montage {{options}} :input_file :output_file",
+  TemplateOpts = [{input_file, string:join(Files, "' '")}, {output_file, Converted}],
+  exec_cmd(Template, TemplateOpts, Options).
+
+%% Version
+version() ->
+  Template = "version",
+  exec_cmd(Template).
+
 %% =====================================================
 %% INTERNAL FUNCTIONS
 %% =====================================================
+
+%% Run an os:cmd based on a template without options
+exec_cmd(Template) ->
+  os:cmd(lists:concat(["gm ",Template])).
 
 %% Run an os:cmd based on a template and passed in options
 exec_cmd(Template, ExtraOptions, Options) ->
@@ -152,7 +176,7 @@ parse_error(Cmd, [{ErrorDescription, Error}|Errors]) ->
     _ ->
       parse_error(Cmd, Errors)
   end.
-    
+
 %% Return ok if successful, otherwise return a useful error
 parse_result(Result) ->
   case cmd_error(Result) of

@@ -77,14 +77,14 @@ version() ->
 
 %% Run an os:cmd based on a template without options
 exec_cmd(Template) ->
-  os:cmd(lists:concat(["gm ",Template])).
+  os:cmd(lists:concat(["gm ", Template])).
 
 %% Run an os:cmd based on a template and passed in options
 exec_cmd(Template, ExtraOptions, Options) ->
   OptString = opt_string(Options),
   PreParsed = bind_data(Template, ExtraOptions, [escape]),
   CmdString = re:replace(PreParsed, "{{options}}", OptString, [{return, list}]),
-  Cmd = os:cmd(lists:concat(["gm ",CmdString])),
+  Cmd = os:cmd(lists:concat(["gm ", CmdString])),
   parse_result(Cmd).
 
 %% Create a format string from the passed in options

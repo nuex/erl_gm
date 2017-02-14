@@ -7,6 +7,7 @@
           identify_explicit/2,
           identify/2,
           composite/4,
+          convert/2,
           convert/3,
           convert/4,
           mogrify/2,
@@ -50,6 +51,9 @@ composite(File, BaseFile, Converted, Options) ->
   exec_cmd(Template, TemplateOpts, Options).
 
 %% Convert
+convert(File, Converted) ->
+  convert(File, Converted, [], []).
+
 convert(File, Converted, Options) ->
   convert(File, Converted, Options, []).
 

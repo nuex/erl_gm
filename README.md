@@ -74,6 +74,7 @@ gm:version
 -extent
 -flip
 -format
+-geometry
 -gravity
 -interlace
 -magnify

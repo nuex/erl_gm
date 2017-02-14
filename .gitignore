@@ -1,4 +1,10 @@
 # Erlang binaries
 /ebin
 
+# Erlang compiled
+*.beam
+
+# Erlang crash
+erl_crash.dump
+
 .fetch

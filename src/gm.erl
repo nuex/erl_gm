@@ -8,6 +8,7 @@
           identify/2,
           composite/4,
           convert/3,
+          convert/4,
           mogrify/2,
           montage/3,
           version/0
@@ -50,9 +51,12 @@ composite(File, BaseFile, Converted, Options) ->
 
 %% Convert
 convert(File, Converted, Options) ->
-  Template = "convert {{options}} :input_file :output_file",
+  convert(File, Converted, Options, []).
+
+convert(File, Converted, Options, OutputOptions) ->
+  Template = "convert {{options}} :input_file {{output_options}} :output_file",
   TemplateOpts = [{input_file, File}, {output_file, Converted}],
-  exec_cmd(Template, TemplateOpts, Options).
+  exec_cmd(Template, TemplateOpts, Options, OutputOptions).
 
 %% Mogrify
 mogrify(File, Options) ->
@@ -81,10 +85,15 @@ exec_cmd(Template) ->
 
 %% Run an os:cmd based on a template and passed in options
 exec_cmd(Template, ExtraOptions, Options) ->
+  exec_cmd(Template, ExtraOptions, Options, []).
+
+exec_cmd(Template, ExtraOptions, Options, OutputOptions) ->
   OptString = opt_string(Options),
+  OutOptString = opt_string(OutputOptions),
   PreParsed = bind_data(Template, ExtraOptions, [escape]),
   CmdString = re:replace(PreParsed, "{{options}}", OptString, [{return, list}]),
-  Cmd = os:cmd(lists:concat(["gm ", CmdString])),
+  Command = re:replace(CmdString, "{{output_options}}", OutOptString, [{return, list}]),
+  Cmd = os:cmd(lists:concat(["gm ", Command])),
   parse_result(Cmd).
 
 %% Create a format string from the passed in options
@@ -117,7 +126,6 @@ converted_value(height, V) ->
   list_to_integer(V);
 converted_value(_Label, V) ->
   V.
-
 
 %% Build the option part of the command string from a list of options
 opt_string(Options) ->

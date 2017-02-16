@@ -11,6 +11,8 @@
 
 opt('+adjoin') -> {"+adjoin"};
 opt(adjoin) -> {"-adjoin"};
+opt({background, Color}) ->
+  {"-background", ":color", [{color, Color}]};
 opt({blur, Radius, Sigma}) ->
   {"-blur", ":radiusx:sigma", [
     {radius, Radius},
@@ -45,6 +47,8 @@ opt({extent, Width, Height}) ->
     {width, Width},
     {height, Height}
   ]};
+opt({fill, Color}) ->
+  {"-fill", ":color", [{color, Color}]};
 opt(flip) -> {"-flip"};
 opt({format, Format}) ->
   {"-format", ":format", [{format, Format}]};
@@ -76,7 +80,11 @@ opt({gravity, Gravity}) ->
 opt({interlace, Interlace}) ->
   {"-interlace", ":interlace", [{interlace, Interlace}]};
 opt(magnify) -> {"-magnify"};
+opt('+matte') -> {"+matte"};
+opt(matte) -> {"-matte"};
 opt(negate) -> {"-negate"};
+opt({opaque, Color}) ->
+  {"-opaque", ":color", [{color, Color}]};
 opt({output_directory, Dir}) ->
   {"-output-directory", ":output_directory", [{output_directory, Dir}]};
 opt({quality, Quality}) ->
@@ -98,6 +106,8 @@ opt({thumbnail, Width, Height}) ->
     {width, Width},
     {height, Height}
   ]};
+opt({transparent, Color}) ->
+  {"-transparent", ":color", [{color, Color}]};
 opt({type, Type}) ->
   {"-type", ":type", [{type, Type}]};
 opt({watermark, Width, Height}) ->

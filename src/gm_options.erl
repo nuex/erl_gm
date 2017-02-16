@@ -80,6 +80,7 @@ opt({gravity, Gravity}) ->
 opt({interlace, Interlace}) ->
   {"-interlace", ":interlace", [{interlace, Interlace}]};
 opt(magnify) -> {"-magnify"};
+opt('+matte') -> {"+matte"};
 opt(matte) -> {"-matte"};
 opt(negate) -> {"-negate"};
 opt({opaque, Color}) ->
@@ -105,6 +106,8 @@ opt({thumbnail, Width, Height}) ->
     {width, Width},
     {height, Height}
   ]};
+opt({transparent, Color}) ->
+  {"-transparent", ":color", [{color, Color}]};
 opt({type, Type}) ->
   {"-type", ":type", [{type, Type}]};
 opt({watermark, Width, Height}) ->

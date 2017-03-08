@@ -40,10 +40,19 @@ opt({define, Key, Value}) ->
   ]};
 opt({dissolve, Percent}) ->
   {"-dissolve", ":percent", [{percent, Percent}]};
-opt({draw, Width, Height}) ->
-  {"-draw", ":widthx:height", [
-    {width, Width},
-    {height, Height}
+opt({draw, Primitive, XInset, YInset}) ->
+  {"-draw", ":primitive :xinset,:yinset", [
+    {primitive, Primitive},
+    {xinset, XInset},
+    {yinset, YInset}
+  ]};
+opt({draw, Primitive, XInset, YInset, XOffset, YOffset}) ->
+  {"-draw", ":primitive :x_inset,:y_inset :x_offset,:y_offset", [
+    {primitive, Primitive},
+    {x_inset, XInset},
+    {y_inset, YInset},
+    {x_offset, XOffset},
+    {y_offset, YOffset}
   ]};
 opt({edge, Radius}) ->
   {"-edge", ":radius", [{radius, Radius}]};

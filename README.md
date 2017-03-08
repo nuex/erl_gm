@@ -73,6 +73,7 @@ gm:version
 -draw
 -edge
 -extent
+-fill
 -flip
 -format
 -geometry

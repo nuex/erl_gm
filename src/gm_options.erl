@@ -40,6 +40,11 @@ opt({define, Key, Value}) ->
   ]};
 opt({dissolve, Percent}) ->
   {"-dissolve", ":percent", [{percent, Percent}]};
+opt({draw, Width, Height}) ->
+  {"-draw", ":widthx:height", [
+    {width, Width},
+    {height, Height}
+  ]};
 opt({edge, Radius}) ->
   {"-edge", ":radius", [{radius, Radius}]};
 opt({extent, Width, Height}) ->

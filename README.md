@@ -70,6 +70,7 @@ gm:version
 -crop
 -define
 -dissolve
+-draw
 -edge
 -extent
 -flip

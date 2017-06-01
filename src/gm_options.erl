@@ -61,6 +61,7 @@ opt({extent, Width, Height}) ->
     {width, Width},
     {height, Height}
   ]};
+opt(flatten) -> {"-flatten"};
 opt({fill, Color}) ->
   {"-fill", ":color", [{color, Color}]};
 opt(flip) -> {"-flip"};

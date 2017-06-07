@@ -65,6 +65,7 @@ gm:version
 
 ```
 -adjoin
+-background
 -blur
 -create_directories
 -crop
@@ -81,12 +82,16 @@ gm:version
 -gravity
 -interlace
 -magnify
++matte
+-matte
 -negate
+-opaque
 -output_directory
 -quality
 -resize
 -rotate
 -size
+-transparent
 -thumbnail
 -type
 -watermark

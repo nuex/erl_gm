@@ -116,6 +116,7 @@ opt({size, Width, Height}) ->
     {width, Width},
     {height, Height}
   ]};
+opt(strip) -> {"-strip"};
 opt({thumbnail, Width, Height}) ->
   {"-thumbnail", ":widthx:height^", [
     {width, Width},

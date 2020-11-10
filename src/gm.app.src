@@ -8,5 +8,9 @@
                 stdlib
             ]},
         {modules, [gm, gm_format_char, gm_options]},
-        {env, []}
+        {env, []},
+        {licenses, ["MIT"]},
+        {pkg_name, "erl_gm"},
+        {maintainers, ["Chase James"]},
+        {links, [{"Github", "https://github.com/nuex/erl_gm"}]}
     ]}.

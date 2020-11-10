@@ -9,6 +9,9 @@
 %% Options ordered alphabetically
 %% =====================================================
 
+% For all other unsupported custom opts
+opt({custom, Opt}) -> {Opt};
+
 opt('+adjoin') -> {"+adjoin"};
 opt(adjoin) -> {"-adjoin"};
 opt({background, Color}) ->

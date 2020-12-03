@@ -4,7 +4,7 @@ An Erlang GraphicsMagick wrapper
 
 ## USAGE
 
-```
+```erlang
 % Crop image into 100x100 tiles
 gm:convert("/some/image.jpg", "tile", [{crop, 100, 100}]).
 
